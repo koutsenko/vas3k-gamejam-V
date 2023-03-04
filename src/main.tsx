@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import MenuScreen from "./screens/menu";
 import GameScreen from "./screens/game";
 
@@ -9,8 +9,14 @@ enum GameStatus {
   GAME_OVER,
 }
 
+/**
+ * Начальный статус игры в режиме разработки.
+ */
+const initialStatus =
+  process.env.NODE_ENV === "development" ? GameStatus.PLAYING : GameStatus.MENU;
+
 function App() {
-  const [status, setStatus] = useState(GameStatus.MENU);
+  const [status, setStatus] = useState(initialStatus);
 
   const startGame = () => {
     setStatus(GameStatus.PLAYING);
@@ -25,4 +31,4 @@ function App() {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+createRoot(document.getElementById("app") as Element).render(<App />);
