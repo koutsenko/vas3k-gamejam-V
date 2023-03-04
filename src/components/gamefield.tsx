@@ -1,53 +1,42 @@
 import React, { useMemo } from "react";
-import { ECellType } from "../enums";
+import { IWorld } from "../common/models";
 
 import { CellStyled, FieldStyled } from "./styles";
 
 /**
- * @param [map] Карта.
- * @param [onCellClick] Обработчик клика на ячейку.
- * @param x Размер поля по-горизонтали, кол-во спрайтов.
- * @param y Размер поля по-вертикали, кол-во спрайтов.
+ * @param world Мир.
+ * @param [onCellClick] Обработчик клика на ячейку карты мира.
  */
 interface IProps {
-  map?: Array<Array<ECellType>>;
+  world: IWorld;
   onCellClick?: (y: number, x: number) => void;
-  x: number;
-  y: number;
 }
 
 /**
  * Игровое поле.
  */
-export default function GameField({
-  map = [],
-  onCellClick = () => {},
-  x,
-  y,
-}: IProps): JSX.Element {
+export default function GameField({ world, onCellClick }: IProps): JSX.Element {
   const cells = useMemo(() => {
     let result = [];
 
-    for (let i = 0; i < x; i++) {
-      for (let j = 0; j < y; j++) {
+    for (let i = 0; i < world.size[0]; i++) {
+      for (let j = 0; j < world.size[1]; j++) {
         result.push(
           <CellStyled
-            type={map[j][i]}
+            cellType={world.map[j][i]}
             key={`${i}-${j}`}
-            onClick={() => onCellClick(j, i)}
             top={i}
             left={j}
+            {...(onCellClick && {
+              onClick: () => onCellClick(j, i),
+            })}
           />
         );
       }
     }
 
     return result;
-  }, [map, x, y]);
+  }, [world]);
 
-  return (
-    <FieldStyled width={x} height={y}>
-      {cells}
-    </FieldStyled>
-  );
+  return <FieldStyled size={world.size}>{cells}</FieldStyled>;
 }
