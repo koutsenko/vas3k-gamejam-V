@@ -6,6 +6,11 @@ import { ECellType } from "./enums";
 export type TSize = [number, number];
 
 /**
+ * Позиция чего-либо.
+ */
+export type TPosition = [number, number];
+
+/**
  * Структура игрового мира.
  *
  * @prop map Игровая карта.

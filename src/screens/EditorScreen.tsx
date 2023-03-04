@@ -56,7 +56,7 @@ export default function EditorScreen({ onOpenMenu, onTestWorld }: IProps) {
   return (
     <ContainerStyled>
       <h1>Editor Screen</h1>
-      <GameField world={world} onCellClick={handleCellClick} />
+      <GameField hidePlayer world={world} onCellClick={handleCellClick} />
       <div>
         <button onClick={clear}>Clear</button>
         <button onClick={save}>Save</button>

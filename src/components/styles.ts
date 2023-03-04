@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { CELL_SIZE, mapCellTypeToBackgroundColor } from "../common/consts";
 import { ECellType } from "../common/enums";
-import { TSize } from "../common/models";
+import { TSize, TPosition } from "../common/models";
 
 /**
  * Игровое поле.
@@ -15,7 +15,7 @@ export const FieldStyled = styled.div<{ size: TSize }>`
 `;
 
 /**
- * Ячейка игрового поля.
+ * Спрайт игрового поля.
  */
 export const CellStyled = styled.div<{
   cellType: ECellType;
@@ -28,5 +28,17 @@ export const CellStyled = styled.div<{
   outline: 1px dashed gray;
   position: absolute;
   top: ${(props) => props.top * CELL_SIZE}px;
+  width: ${CELL_SIZE}px;
+`;
+
+/**
+ * Спрайт игрока.
+ */
+export const PlayerStyled = styled.div<{ position: TPosition }>`
+  background-color: yellow;
+  height: ${CELL_SIZE}px;
+  left: ${(props) => props.position[0] * CELL_SIZE}px;
+  position: absolute;
+  top: ${(props) => props.position[1] * CELL_SIZE}px;
   width: ${CELL_SIZE}px;
 `;

@@ -1,21 +1,29 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { IWorld } from "../common/models";
 
-import { CellStyled, FieldStyled } from "./styles";
+import { CellStyled, FieldStyled, PlayerStyled } from "./styles";
 
 /**
- * @param world Мир.
+ * @param [hidePlayer] Скрытие игрока.
  * @param [onCellClick] Обработчик клика на ячейку карты мира.
+ * @param world Мир.
  */
 interface IProps {
-  world: IWorld;
+  hidePlayer?: boolean;
   onCellClick?: (y: number, x: number) => void;
+  world: IWorld;
 }
 
 /**
  * Игровое поле.
  */
-export default function GameField({ world, onCellClick }: IProps): JSX.Element {
+export default function GameField({
+  hidePlayer = false,
+  onCellClick,
+  world,
+}: IProps): JSX.Element {
+  const [playerPosition, setPlayerPosition] = useState(world.spawnPoint);
+
   const cells = useMemo(() => {
     let result = [];
 
@@ -38,5 +46,10 @@ export default function GameField({ world, onCellClick }: IProps): JSX.Element {
     return result;
   }, [world]);
 
-  return <FieldStyled size={world.size}>{cells}</FieldStyled>;
+  return (
+    <FieldStyled size={world.size}>
+      {cells}
+      {!hidePlayer && <PlayerStyled position={playerPosition} />}
+    </FieldStyled>
+  );
 }
