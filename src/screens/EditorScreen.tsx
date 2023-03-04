@@ -1,5 +1,5 @@
 import React from "react";
-import GameField from "../components/gamefield";
+import GameField from "../components/GameField";
 import { useWorld } from "../hooks/useWorld";
 import { TSize } from "../common/models";
 import { ContainerStyled } from "./styles";

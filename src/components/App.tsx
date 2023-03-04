@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { createRoot } from "react-dom/client";
-import MenuScreen from "./screens/menu";
-import GameScreen from "./screens/game";
-import GameOverScreen from "./screens/gameover";
-import { IS_DEV } from "./common/consts";
-import { EGameStatus } from "./common/enums";
-import EditorScreen from "./screens/editor";
+import MenuScreen from "../screens/MenuScreen";
+import GameScreen from "../screens/GameScreen";
+import GameOverScreen from "../screens/GameOverScreen";
+import { IS_DEV } from "../common/consts";
+import { EGameStatus } from "../common/enums";
+import EditorScreen from "../screens/EditorScreen";
 
 /**
  * Начальный статус игры в режиме разработки.
  */
 const initialStatus = IS_DEV ? EGameStatus.EDITOR : EGameStatus.MENU;
 
-function App() {
+export function App() {
   const [status, setStatus] = useState(initialStatus);
 
   const startGame = () => {
@@ -37,5 +36,3 @@ function App() {
     return <GameOverScreen />;
   }
 }
-
-createRoot(document.getElementById("app") as Element).render(<App />);

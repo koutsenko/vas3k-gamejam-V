@@ -2,7 +2,7 @@ import { useState } from "react";
 import { IWorld, TSize } from "../common/models";
 import { ECellType } from "../common/enums";
 import { emptyWorld, storageObjectName } from "../common/consts";
-import { cloneDeep } from "../common/util";
+import { cloneDeep } from "../common/utils";
 
 /**
  * Инициализация пустого мира.

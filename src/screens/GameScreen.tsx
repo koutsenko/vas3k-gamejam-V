@@ -1,9 +1,9 @@
 import React from "react";
-import GameField from "../components/gamefield";
+import GameField from "../components/GameField";
 import { emptyWorld } from "../common/consts";
 
 import { ContainerStyled } from "./styles";
-import { cloneDeep } from "../common/util";
+import { cloneDeep } from "../common/utils";
 
 /**
  * Экран "игра".
