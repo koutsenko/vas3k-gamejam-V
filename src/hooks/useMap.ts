@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { TSize } from "../models";
+import { ECellType } from "../enums";
 
 /**
  * Инициализация пустой карты.
@@ -11,7 +12,8 @@ const getEmptyMap = (size: TSize) => {
   for (let j = 0; j < size[1]; j++) {
     newMap.push([]);
     for (let i = 0; i < size[0]; i++) {
-      newMap[j].push(false as never);
+      // TODO WTF?
+      newMap[j].push(ECellType.GRASS as never);
     }
   }
   return newMap;
@@ -21,7 +23,7 @@ const getEmptyMap = (size: TSize) => {
  * Хук для работы с игровой картой.
  */
 export const useMap = (size: TSize) => {
-  const [map, setMap] = useState<Array<Array<boolean>>>(getEmptyMap(size));
+  const [map, setMap] = useState<Array<Array<ECellType>>>(getEmptyMap(size));
 
   const saveMap = () => {
     localStorage.setItem("map", JSON.stringify(map));

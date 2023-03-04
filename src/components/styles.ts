@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { CELL_SIZE } from "../consts";
+import { CELL_SIZE, mapCellTypeToBackgroundColor } from "../consts";
+import { ECellType } from "../enums";
 
 /**
  * Игровое поле.
@@ -16,11 +17,11 @@ export const FieldStyled = styled.div<{ height: number; width: number }>`
  * Ячейка игрового поля.
  */
 export const CellStyled = styled.div<{
-  busy: boolean;
+  type: ECellType;
   top: number;
   left: number;
 }>`
-  background-color: ${(props) => (props.busy ? "yellow" : "gray")};
+  background-color: ${(props) => mapCellTypeToBackgroundColor[props.type]};
   height: ${CELL_SIZE}px;
   left: ${(props) => props.left * CELL_SIZE}px;
   outline: 1px dashed gray;

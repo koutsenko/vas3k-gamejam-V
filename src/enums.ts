@@ -7,3 +7,12 @@ export enum EGameStatus {
   PLAYING,
   GAME_OVER,
 }
+
+/**
+ * Тип ячейки игрового поля.
+ */
+export enum ECellType {
+  HOUSE,
+  GRASS,
+  POOL,
+}

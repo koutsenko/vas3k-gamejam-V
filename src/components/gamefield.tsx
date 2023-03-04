@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { ECellType } from "../enums";
 
 import { CellStyled, FieldStyled } from "./styles";
 
@@ -9,7 +10,7 @@ import { CellStyled, FieldStyled } from "./styles";
  * @param y Размер поля по-вертикали, кол-во спрайтов.
  */
 interface IProps {
-  map?: Array<Array<boolean>>;
+  map?: Array<Array<ECellType>>;
   onCellClick?: (y: number, x: number) => void;
   x: number;
   y: number;
@@ -31,7 +32,7 @@ export default function GameField({
       for (let j = 0; j < y; j++) {
         result.push(
           <CellStyled
-            busy={map[j][i]}
+            type={map[j][i]}
             key={`${i}-${j}`}
             onClick={() => onCellClick(j, i)}
             top={i}

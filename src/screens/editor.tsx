@@ -3,6 +3,7 @@ import GameField from "../components/gamefield";
 import { useMap } from "../hooks/useMap";
 import { TSize } from "../models";
 import { ContainerStyled } from "./styles";
+import { ECellType } from "../enums";
 
 const size: TSize = [10, 10];
 
@@ -17,7 +18,15 @@ export default function EditorScreen() {
    */
   const handleCellClick = (rowIndex: number, colIndex: number) => {
     const updatedMap = map.map((row) => [...row]);
-    updatedMap[rowIndex][colIndex] = !updatedMap[rowIndex][colIndex];
+
+    if (updatedMap[rowIndex][colIndex] === ECellType.GRASS) {
+      updatedMap[rowIndex][colIndex] = ECellType.HOUSE;
+    } else if (updatedMap[rowIndex][colIndex] === ECellType.HOUSE) {
+      updatedMap[rowIndex][colIndex] = ECellType.POOL;
+    } else if (updatedMap[rowIndex][colIndex] === ECellType.POOL) {
+      updatedMap[rowIndex][colIndex] = ECellType.GRASS;
+    }
+
     setMap(updatedMap);
   };
 
