@@ -3,6 +3,9 @@ import GameField from "../components/gamefield";
 
 import { ContainerStyled } from "./styles";
 
+/**
+ * Экран "игра".
+ */
 export default function GameScreen() {
   return (
     <ContainerStyled>

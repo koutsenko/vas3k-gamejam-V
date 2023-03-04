@@ -15,7 +15,12 @@ export const FieldStyled = styled.div<{ height: number; width: number }>`
 /**
  * Ячейка игрового поля.
  */
-export const CellStyled = styled.div<{ top: number; left: number }>`
+export const CellStyled = styled.div<{
+  busy: boolean;
+  top: number;
+  left: number;
+}>`
+  background-color: ${(props) => (props.busy ? "yellow" : "gray")};
   height: ${CELL_SIZE}px;
   left: ${(props) => props.left * CELL_SIZE}px;
   outline: 1px dashed gray;

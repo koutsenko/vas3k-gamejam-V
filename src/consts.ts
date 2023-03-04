@@ -1,1 +1,4 @@
 export const CELL_SIZE = 32;
+
+// export const IS_DEV = false;
+export const IS_DEV = process.env.NODE_ENV === "development";
