@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import GameField from "../components/GameField";
 import { useWorld } from "../hooks/useWorld";
-import { TSize } from "../common/models";
+import { TSize, IWorld } from "../common/models";
 import { ContainerStyled } from "./styles";
 import { ECellType } from "../common/enums";
 
@@ -9,15 +9,17 @@ const size: TSize = [10, 10];
 
 /**
  * @prop onOpenMenu Обработчик перехода в игровое меню.
+ * @prop onTestWorld Обработчик переход в режим тестирования мира.
  */
 interface IProps {
   onOpenMenu: () => void;
+  onTestWorld: (world: IWorld) => void;
 }
 
 /**
  * Экран "редактор".
  */
-export default function EditorScreen({ onOpenMenu }: IProps) {
+export default function EditorScreen({ onOpenMenu, onTestWorld }: IProps) {
   const { world, setWorld, save, load, clear, clearSave } = useWorld(size);
 
   /**
@@ -37,6 +39,20 @@ export default function EditorScreen({ onOpenMenu }: IProps) {
     setWorld({ ...world, map });
   };
 
+  /**
+   * Обработчик выхода в меню.
+   */
+  const handleOpenMenu = () => {
+    onOpenMenu();
+  };
+
+  /**
+   * Обработчик клика на кнопку тестирования мира.
+   */
+  const handleTestWorld = useCallback(() => {
+    onTestWorld(world);
+  }, [world]);
+
   return (
     <ContainerStyled>
       <h1>Editor Screen</h1>
@@ -46,7 +62,10 @@ export default function EditorScreen({ onOpenMenu }: IProps) {
         <button onClick={save}>Save</button>
         <button onClick={load}>Load</button>
         <button onClick={clearSave}>Clear Save</button>
-        <button onClick={onOpenMenu}>Menu</button>
+      </div>
+      <div>
+        <button onClick={handleOpenMenu}>Menu</button>
+        <button onClick={handleTestWorld}>Test World</button>
       </div>
     </ContainerStyled>
   );

@@ -1,17 +1,20 @@
 import React from "react";
 import GameField from "../components/GameField";
-import { emptyWorld } from "../common/consts";
 
 import { ContainerStyled } from "./styles";
-import { cloneDeep } from "../common/utils";
+import { IWorld } from "../common/models";
+
+/**
+ * @param world Игровой мир.
+ */
+interface IProps {
+  world: IWorld;
+}
 
 /**
  * Экран "игра".
  */
-export default function GameScreen() {
-  // TODO Загружать мир из json.
-  const world = cloneDeep(emptyWorld);
-
+export default function GameScreen({ world }: IProps) {
   return (
     <ContainerStyled>
       <h1>Game Screen</h1>
