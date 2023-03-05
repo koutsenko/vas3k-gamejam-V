@@ -36,6 +36,7 @@ export const CellStyled = styled.div<{
  */
 export const PlayerStyled = styled.div<{ position: TPosition }>`
   background-color: yellow;
+  border-radius: ${CELL_SIZE / 2}px;
   height: ${CELL_SIZE}px;
   left: ${(props) => props.position[0] * CELL_SIZE}px;
   position: absolute;

@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import GameField from "../components/GameField";
 import { useWorld } from "../hooks/useWorld";
-import { TSize, IWorld } from "../common/models";
+import { TSize, IWorld, TPosition } from "../common/models";
 import { ContainerStyled } from "./styles";
-import { ECellType } from "../common/enums";
+import { editorChangesMap } from "../common/consts";
 
 const size: TSize = [10, 10];
 
@@ -25,16 +25,10 @@ export default function EditorScreen({ onOpenMenu, onTestWorld }: IProps) {
   /**
    * Обработчик клика на ячейку в редакторе карты.
    */
-  const handleCellClick = (rowIndex: number, colIndex: number) => {
+  const handleCellClick = ([x, y]: TPosition) => {
     const map = world.map.map((row) => [...row]);
 
-    if (map[rowIndex][colIndex] === ECellType.GRASS) {
-      map[rowIndex][colIndex] = ECellType.HOUSE;
-    } else if (map[rowIndex][colIndex] === ECellType.HOUSE) {
-      map[rowIndex][colIndex] = ECellType.POOL;
-    } else if (map[rowIndex][colIndex] === ECellType.POOL) {
-      map[rowIndex][colIndex] = ECellType.GRASS;
-    }
+    map[y][x] = editorChangesMap[map[y][x]];
 
     setWorld({ ...world, map });
   };

@@ -1,16 +1,19 @@
-import React, { useMemo, useState } from "react";
-import { IWorld } from "../common/models";
+import React, { useEffect, useMemo } from "react";
+import { IWorld, TPosition } from "../common/models";
+import { useMove } from "../hooks/useMove";
 
 import { CellStyled, FieldStyled, PlayerStyled } from "./styles";
 
 /**
  * @param [hidePlayer] Скрытие игрока.
  * @param [onCellClick] Обработчик клика на ячейку карты мира.
+ * @param [onMovePlayer] Обработчик передвижения игрока.
  * @param world Мир.
  */
 interface IProps {
   hidePlayer?: boolean;
-  onCellClick?: (y: number, x: number) => void;
+  onCellClick?: (position: TPosition) => void;
+  onMovePlayer?: (position: TPosition) => void;
   world: IWorld;
 }
 
@@ -20,23 +23,36 @@ interface IProps {
 export default function GameField({
   hidePlayer = false,
   onCellClick,
+  onMovePlayer,
   world,
-}: IProps): JSX.Element {
-  const [playerPosition, setPlayerPosition] = useState(world.spawnPoint);
+}: IProps) {
+  const [playerPosition] = useMove(
+    world.playerPosition,
+    world.size,
+    !hidePlayer
+  );
 
+  /**
+   * Постфактум уведомляем движок о перемещении персонажа.
+   */
+  useEffect(() => onMovePlayer?.(playerPosition), [playerPosition]);
+
+  /**
+   * Рендер ячеек мира.
+   */
   const cells = useMemo(() => {
     let result = [];
 
-    for (let i = 0; i < world.size[0]; i++) {
-      for (let j = 0; j < world.size[1]; j++) {
+    for (let rowIndex = 0; rowIndex < world.size[1]; rowIndex++) {
+      for (let colIndex = 0; colIndex < world.size[0]; colIndex++) {
         result.push(
           <CellStyled
-            cellType={world.map[j][i]}
-            key={`${i}-${j}`}
-            top={i}
-            left={j}
+            cellType={world.map[rowIndex][colIndex]}
+            key={`${colIndex}-${rowIndex}`}
+            top={colIndex}
+            left={rowIndex}
             {...(onCellClick && {
-              onClick: () => onCellClick(j, i),
+              onClick: () => onCellClick([colIndex, rowIndex]),
             })}
           />
         );

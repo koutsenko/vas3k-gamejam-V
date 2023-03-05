@@ -14,11 +14,11 @@ export type TPosition = [number, number];
  * Структура игрового мира.
  *
  * @prop map Игровая карта.
+ * @prop playerPosition Координата персонажа.
  * @prop size Размер карты мира (кол-во ячеек по горизонтали и вертикали).
- * @prop spawnPoint Точка появления персонажа.
  */
 export interface IWorld {
   map: Array<Array<ECellType>>;
+  playerPosition: TPosition;
   size: TSize;
-  spawnPoint: [number, number];
 }

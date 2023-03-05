@@ -1,33 +1,13 @@
 import { useState } from "react";
 import { IWorld, TSize } from "../common/models";
-import { ECellType } from "../common/enums";
-import { emptyWorld, storageObjectName } from "../common/consts";
-import { cloneDeep } from "../common/utils";
-
-/**
- * Инициализация пустого мира.
- *
- * @param size Размер карты.
- */
-const getEmptyWorld = (size: TSize): IWorld => {
-  let newWorld: IWorld = cloneDeep(emptyWorld);
-
-  newWorld.size = size;
-  for (let j = 0; j < size[1]; j++) {
-    newWorld.map.push([]);
-    for (let i = 0; i < size[0]; i++) {
-      newWorld.map[j].push(ECellType.GRASS);
-    }
-  }
-
-  return newWorld;
-};
+import { storageObjectName } from "../common/consts";
+import { buildEmptyWorld } from "../common/utils";
 
 /**
  * Хук для работы с игровым миром.
  */
 export const useWorld = (size: TSize) => {
-  const [world, setWorld] = useState<IWorld>(getEmptyWorld(size));
+  const [world, setWorld] = useState<IWorld>(buildEmptyWorld(size));
 
   const save = () => {
     localStorage.setItem(storageObjectName, JSON.stringify(world));
@@ -40,7 +20,7 @@ export const useWorld = (size: TSize) => {
   };
 
   const clear = () => {
-    setWorld(getEmptyWorld(size));
+    setWorld(buildEmptyWorld(size));
   };
 
   const clearSave = () => {
